@@ -15,7 +15,8 @@ The *optional* task: find out how to exploit the vulnerability in the SQL profil
 ```TEXT
 BankZecure Web Application
 
-The fake customer accounts' credentials are listed <https://github.com/WildCodeSchool/quest-springboot-sql-injection/blob/master/FakeAccountsCredentials.md>.
+The fake customer accounts' credentials are listed here:
+<https://github.com/WildCodeSchool/quest-springboot-sql-injection/blob/master/FakeAccountsCredentials.md>.
 ```
 
 **As for the required task**, you have to replace the **Statement**s and the *dynamic* queries (built by concatenating string elements) with **PreparedStatement**s and parameterized queries (where the query contains **?** placeholders, in which values are injected via **setString**, etc.).
