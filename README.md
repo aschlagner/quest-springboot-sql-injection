@@ -13,9 +13,9 @@ The *required* task is fix the 3 SQL injection vulnerabilities affecting:
 The *optional* task: find out how to exploit the vulnerability in the SQL profile update.
 
 ```TEXT
-### BankZecure Web Application
+BankZecure Web Application
 
-The fake customer accounts' credentials are listed [here](https://github.com/WildCodeSchool/quest-springboot-sql-injection/blob/master/FakeAccountsCredentials.md).
+The fake customer accounts' credentials are listed <https://github.com/WildCodeSchool/quest-springboot-sql-injection/blob/master/FakeAccountsCredentials.md>.
 ```
 
 **As for the required task**, you have to replace the **Statement**s and the *dynamic* queries (built by concatenating string elements) with **PreparedStatement**s and parameterized queries (where the query contains **?** placeholders, in which values are injected via **setString**, etc.).
@@ -48,7 +48,10 @@ Possible scenario:
 Someone uses a script that serially goes through all the integer identifiers from 1 to n. Either the error message "Error: account not found or incorrect password" is displayed or the email address and password are reset without any further questions. This would give you all existing identifiers with a newly set uniform password.
 
 e.g. with Postman
+
+```HTML
 POST <http://localhost:8080/customers/update?identifier=125054&email=someone@somewhere&password=unsecret>
+```
 
 mysql> select * from customer where identifier=125054;
 
