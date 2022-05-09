@@ -1,8 +1,9 @@
 package com.bankzecure.webapp.repository;
 
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
-import java.sql.Statement;
+//import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -11,21 +12,28 @@ import com.bankzecure.webapp.entity.*;
 import com.bankzecure.webapp.JdbcUtils;
 
 public class CreditCardRepository {
-  private final static String DB_URL = "jdbc:mysql://localhost:3306/springboot_bankzecure?serverTimezone=GMT";
+  private final static String DB_URL = "jdbc:mysql://localhost:3307/springboot_bankzecure?serverTimezone=GMT";
 	private final static String DB_USERNAME = "bankzecure";
 	private final static String DB_PASSWORD = "Ultr4B4nk@L0nd0n";
 
   public List<CreditCard> findByCustomerIdentifier(final String identifier) {
     Connection connection = null;
-    Statement statement = null;
+    //Statement statement = null;
+    PreparedStatement pstmt = null;
     ResultSet resultSet = null;
-    final String query = "SELECT cc.* FROM credit_card cc " +
-      "JOIN customer c ON cc.customer_id = c.id " +
-      "WHERE c.identifier = '" + identifier + "'";
+    // final String query = "SELECT cc.* FROM credit_card cc " +
+    //   "JOIN customer c ON cc.customer_id = c.id " +
+    //   "WHERE c.identifier = '" + identifier + "'";
     try {
       connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-      statement = connection.createStatement();
-      resultSet = statement.executeQuery(query);
+      //statement = connection.createStatement();
+      //resultSet = statement.executeQuery(query);
+      pstmt = connection.prepareStatement(
+          "SELECT cc.* FROM credit_card cc " +
+          "JOIN customer c ON cc.customer_id = c.id " +
+          "WHERE c.identifier = ?");
+      pstmt.setString(1, identifier);
+      resultSet = pstmt.executeQuery();
 
       final List<CreditCard> creditCards = new ArrayList<CreditCard>();
 
@@ -44,7 +52,8 @@ public class CreditCardRepository {
       e.printStackTrace();
     } finally {
       JdbcUtils.closeResultSet(resultSet);
-      JdbcUtils.closeStatement(statement);
+      //JdbcUtils.closeStatement(statement);
+      JdbcUtils.closeStatement(pstmt);
       JdbcUtils.closeConnection(connection);
     }
     return null;
